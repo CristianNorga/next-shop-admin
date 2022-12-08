@@ -1,4 +1,10 @@
 module.exports = {
+  'prettier/prettier': [
+    'error',
+    {
+      'endOfLine': 'auto',
+    }
+  ],
   env: {
     browser: true,
     amd: true,
