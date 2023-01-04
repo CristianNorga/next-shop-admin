@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import { useAuth } from '@hooks/useAuth';
 
@@ -8,6 +9,7 @@ export default function LoginPage() {
   const auth = useAuth();
   const [errorLogin, setErrorLogin] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -17,7 +19,7 @@ export default function LoginPage() {
     setLoading(true);
 
     auth.signIn(email, password).then(()=>{
-      // location.pathname = '/dashboard';
+      router.push('/dashboard');
     }).catch(function (error) {
       if (error.response?.status === 401) {
         setErrorLogin('Usuario o password incorrecto.');
