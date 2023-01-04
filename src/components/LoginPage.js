@@ -17,7 +17,7 @@ export default function LoginPage() {
     setLoading(true);
 
     auth.signIn(email, password).then(()=>{
-      location.pathname = '/dashboard';
+      // location.pathname = '/dashboard';
     }).catch(function (error) {
       if (error.response?.status === 401) {
         setErrorLogin('Usuario o password incorrecto.');
