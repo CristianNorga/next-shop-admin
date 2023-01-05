@@ -1,7 +1,7 @@
 const API = process.env.NEXT_PUBLIC_API_URL;
 const VERSION = process.env.NEXT_PUBLIC_API_VERSION;
  
-const endpoints = {
+const endPoints = {
   auth: {
     login: `${API}/api/${VERSION}/auth/login`,
     profile: `${API}/api/${VERSION}/auth/profile`,
@@ -9,6 +9,7 @@ const endpoints = {
   products: {
     getList: (limit, offset) => `${API}/api/${VERSION}/products?limit=${limit}&offset=${offset}`,
     getProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
+    getAll: `${API}/api/${VERSION}/products/`,
     postProduct: `${API}/api/${VERSION}/products`,
     putProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
     deleteProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
@@ -31,4 +32,4 @@ const endpoints = {
   },
 };
 
-export default endpoints;
+export default endPoints;

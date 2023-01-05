@@ -1,14 +1,31 @@
-import { Fragment,useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import Modal from '@common/Modal';
 import FormProduct from '@components/FormProduct';
+import axios from 'axios';
+import endPoints from '@services/api';
+import useAlert from '@hooks/useAlert';
+import Alert from '@common/Alert'
 
-export default function products(){
+export default function Products(){
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
+  const { alert, setAlert, toogleAlert } = useAlert();
 
+  useEffect(()=>{
+    async function getProducts(){
+      const response = await axios.get(endPoints.products.getAll);
+      setProducts(response.data);
+    }
+    try {
+      getProducts()
+    } catch (error) {
+      console.log(error)
+    }
+  }, [alert]);
   return (
     <>
+      <Alert alert={alert} handleClose={toogleAlert} />
       <div className="lg:flex lg:items-center lg:justify-between mb-5">
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of Products</h2>
@@ -18,7 +35,7 @@ export default function products(){
             <button
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={()=>setOpen(true)}
+              onClick={() => setOpen(true)}
             >
               <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Add Product
@@ -54,7 +71,7 @@ export default function products(){
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {/* {products?.map((product) => (
+                  {products?.map((product) => (
                     <tr key={`Product-item-${product.id}`}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -84,18 +101,18 @@ export default function products(){
                         </a>
                       </td>
                     </tr>
-                  ))} */}
+                  ))}
                 </tbody>
-                <tfoot>
-                  <tr>{/* <td col="1">{totalProducts > 0 && <Paginate totalItems={totalProducts} itemsPerPage={PRODUCT_LIMIT} setOffset={setOffsetProducts} neighbours={3}></Paginate>}</td> */}</tr>
-                </tfoot>
+                {/* <tfoot>
+                  <tr><td col="1">{totalProducts > 0 && <Paginate totalItems={totalProducts} itemsPerPage={PRODUCT_LIMIT} setOffset={setOffsetProducts} neighbours={3}></Paginate>}</td></tr>
+                </tfoot> */}
               </table>
             </div>
           </div>
         </div>
       </div>
       <Modal open={open} setOpen={setOpen}>
-        <FormProduct />
+        <FormProduct setOpen={setOpen} setAlert={setAlert}/>
       </Modal>
     </>
   );;
