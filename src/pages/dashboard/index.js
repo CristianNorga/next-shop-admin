@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import useFetch from '@hooks/useFetch';
 import endPoints from '@services/api';
 import Paginate from '@components/Paginate';
+import { Chart } from '@common/Chart';
 
-const PRODUCT_LIMIT = 5;
+const PRODUCT_LIMIT = 15;
 // const PRODUCT_OFFSET = 5;
 
 export default function Dashboard() {
@@ -13,8 +14,27 @@ export default function Dashboard() {
 
   const totalProducts = useFetch(endPoints.products.getList(0, 0)).length;
 
+  const categoryNames = products?.map((product) => 
+    product.category
+  );
+  const categoryCount = categoryNames?.map((category) => category.name);
+
+  const countOccurrences = (arr) => arr.reduce((prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev), {});
+
+  const data = {
+    datasets: [
+      {
+        label: 'Categories',
+        data: countOccurrences(categoryCount),
+        borderWidth: 2,
+        backgroundColor: ['#ffbb11', '#c0c0c0', '#50af95', '#f3ba2f', '#2a71d0'],
+      },
+    ],
+  };
+
   return (
     <>
+      <Chart className="mb-8 mt-2" chartData={data}/>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -77,9 +97,7 @@ export default function Dashboard() {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td col="1">
-                      {totalProducts > 0 && <Paginate totalItems={totalProducts} itemsPerPage={PRODUCT_LIMIT} setOffset={setOffsetProducts} neighbours={3}></Paginate>}
-                    </td>
+                    <td col="1">{totalProducts > 0 && <Paginate totalItems={totalProducts} itemsPerPage={PRODUCT_LIMIT} setOffset={setOffsetProducts} neighbours={3}></Paginate>}</td>
                   </tr>
                 </tfoot>
               </table>
