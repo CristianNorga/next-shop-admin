@@ -12,6 +12,9 @@ const addproduct = async (body) => {
   return response.data;
 }
 
-export {
-  addproduct
+const deleteProduct =  async (id) => {
+  const response = await axios.delete(endPoints.products.deleteProduct(id));
+  return response.data;
 };
+
+export { addproduct, deleteProduct };
