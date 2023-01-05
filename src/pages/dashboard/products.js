@@ -10,7 +10,7 @@ import Alert from '@common/Alert'
 export default function Products(){
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const { alert, setAlert, toogleAlert } = useAlert();
+  const { alert, setAlert, toggleAlert } = useAlert();
 
   useEffect(()=>{
     async function getProducts(){
@@ -25,7 +25,7 @@ export default function Products(){
   }, [alert]);
   return (
     <>
-      <Alert alert={alert} handleClose={toogleAlert} />
+      <Alert alert={alert} handleClose={toggleAlert} />
       <div className="lg:flex lg:items-center lg:justify-between mb-5">
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of Products</h2>
@@ -112,7 +112,7 @@ export default function Products(){
         </div>
       </div>
       <Modal open={open} setOpen={setOpen}>
-        <FormProduct setOpen={setOpen} setAlert={setAlert}/>
+        <FormProduct setOpen={setOpen} setAlert={setAlert} />
       </Modal>
     </>
   );;
