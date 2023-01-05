@@ -6,8 +6,8 @@ import { Bars3Icon, XMarkIcon, BellIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', current: true },
-  { name: 'Productos', href: '/products', current: false },
-  { name: 'Ventas', href: '/sales', current: false },
+  { name: 'Productos', href: '/dashboard/products', current: false },
+  { name: 'Ventas', href: '/dashboard/sales', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav" className="bg-gray-800 relative z-10">
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
