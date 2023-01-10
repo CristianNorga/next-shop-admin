@@ -1,7 +1,7 @@
 import axios from "axios";
 import endPoints from "@services/api";
 
-const addproduct = async (body) => {
+const addProduct = async (body) => {
   const config = {
     headers: {
       accept: '*/*',
@@ -12,9 +12,20 @@ const addproduct = async (body) => {
   return response.data;
 }
 
+const updateProduct = async (id, body) => {
+  const config = {
+    headers: {
+      accept: '*/*',
+      'Content-type': 'application/json',
+    },
+  };
+  const response = await axios.put(endPoints.products.putProduct(id), body, config);
+  return response.data;
+};
+
 const deleteProduct =  async (id) => {
   const response = await axios.delete(endPoints.products.deleteProduct(id));
   return response.data;
 };
 
-export { addproduct, deleteProduct };
+export { addProduct, updateProduct, deleteProduct };
