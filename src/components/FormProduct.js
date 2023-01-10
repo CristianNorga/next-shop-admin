@@ -24,7 +24,9 @@ export default function FormProduct({setOpen, setAlert, product}) {
       updateProduct(product.id, data).then((response) => {
           router.push('/dashboard/products/');
         }
-      );
+      ).catch((error)=>{
+        console.log('FormProduct.js '+ error)
+      });
     } else {
       addProduct(data)
         .then((response) => {

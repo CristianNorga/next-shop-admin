@@ -12,8 +12,14 @@ export default function edit(){
     const { id } = router.query;
     if (!router.isReady) return;
     async function getProduct() {
-      const response = await axios.get(endPoints.products.getProduct(id));
-      setProduct(response.data);
+      try {
+        const response = await axios.get(endPoints.products.getProduct(id));
+        if (response) {
+          setProduct(response.data);
+        }
+      } catch (error) {
+        console.log('[id].js error ', error)
+      }
     }
 
     getProduct();
